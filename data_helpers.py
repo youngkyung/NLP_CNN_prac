@@ -3,31 +3,26 @@ import re
 import itertools
 from collections import Counter
 
-
-
-
-
-def load_data_and_labels(positive_data_file, negative_data_file):
+def load_data_and_labels(true_data_file, false_data_file):
     """
     Loads MR polarity data from files, splits the data into words and generates labels.
     Returns split sentences and labels.
     """
     # Load data from files
-    positive_examples = list(open(positive_data_file, "rt", encoding='UTF8').readlines())
-    positive_examples = [s.strip() for s in positive_examples]
-    negative_examples = list(open(negative_data_file, "rt", encoding='UTF8').readlines())
-    negative_examples = [s.strip() for s in negative_examples]
+    true_examples = list(open(true_data_file, "rt", encoding='UTF8').readlines())
+    true_examples = [s.strip() for s in true_examples]
+    false_examples = list(open(false_data_file, "rt", encoding='UTF8').readlines())
+    false_examples = [s.strip() for s in false_examples]
     # Split by words
-    x_text = positive_examples + negative_examples
-    x_text = [clean_str(sent) for sent in x_text]
+    x_text = true_examples + false_examples
     # Generate labels
-    positive_labels = [[0, 1] for _ in positive_examples]
-    negative_labels = [[1, 0] for _ in negative_examples]
-    y = np.concatenate([positive_labels, negative_labels], 0)
+    true_labels = [[0, 1] for _ in true_examples]
+    false_labels = [[1, 0] for _ in false_examples]
+    y = np.concatenate([true_labels, false_labels], 0)
 
 
     # print([x_text, y])
-    print(np.array(y).tolist())
+    # print(np.array(y).tolist())
     return [x_text, y]
 
 
