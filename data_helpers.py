@@ -2,6 +2,7 @@ import numpy as np
 import re
 import itertools
 from collections import Counter
+import csv
 
 def load_data_and_labels(true_data_file, false_data_file):
     """
@@ -9,19 +10,28 @@ def load_data_and_labels(true_data_file, false_data_file):
     Returns split sentences and labels.
     """
     # Load data from files
-    true_examples = list(open(true_data_file, "rt", encoding='UTF8').readlines())
-    true_examples = [s.strip() for s in true_examples]
-    false_examples = list(open(false_data_file, "rt", encoding='UTF8').readlines())
-    false_examples = [s.strip() for s in false_examples]
+    # true_examples = list(open(true_data_file, "r").readlines())
+    # true_examples = [s.strip().split(',') for s in true_examples]
+
+    # false_examples = list(open(false_data_file, "r").readlines())
+    # false_examples = [s.strip().split(',') for s in false_examples]
+
+    true_examples = [0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2]
+    false_examples = [1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0,1,2,0]
+
+    true_examples = list(map(str, true_examples))
+    false_examples = list(map(str, false_examples))
+
     # Split by words
     x_text = true_examples + false_examples
+
     # Generate labels
     true_labels = [[0, 1] for _ in true_examples]
     false_labels = [[1, 0] for _ in false_examples]
     y = np.concatenate([true_labels, false_labels], 0)
 
 
-    # print([x_text, y])
+    print([x_text, y])
     # print(np.array(y).tolist())
     return [x_text, y]
 
