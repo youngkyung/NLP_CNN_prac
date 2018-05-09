@@ -1,12 +1,10 @@
-#! /usr/bin/env python
-
 import tensorflow as tf
 import numpy as np
 import os
 import time
 import datetime
 import data_helpers
-from text_cnn import TextCNN
+from textcnn import TextCNN
 from tensorflow.contrib import learn
 
 # Parameters
@@ -20,7 +18,7 @@ tf.flags.DEFINE_string("false_data_file", "./data/rt-polaritydata/rt-polarity.fa
 
 # Model Hyperparameters
 tf.flags.DEFINE_integer("embedding_dim", 128, "Dimensionality of character embedding (default: 128)")
-tf.flags.DEFINE_string("filter_sizes", "3,4,5", "Comma-separated filter sizes (default: '3,4,5')")
+tf.flags.DEFINE_string("filter_sizes", "1", "Comma-separated filter sizes (default: '3,4,5')")
 tf.flags.DEFINE_integer("num_filters", 128, "Number of filters per filter size (default: 128)")
 tf.flags.DEFINE_float("dropout_keep_prob", 0.5, "Dropout keep probability (default: 0.5)")
 tf.flags.DEFINE_float("l2_reg_lambda", 0.0, "L2 regularization lambda (default: 0.0)")
@@ -102,7 +100,9 @@ with tf.Graph().as_default():
         for g, v in grads_and_vars:
             if g is not None:
                 grad_hist_summary = tf.summary.histogram("{}/grad/hist".format(v.name), g)
+                print(grad_hist_summary)
                 sparsity_summary = tf.summary.scalar("{}/grad/sparsity".format(v.name), tf.nn.zero_fraction(g))
+                print(sparsity_summary)
                 grad_summaries.append(grad_hist_summary)
                 grad_summaries.append(sparsity_summary)
         grad_summaries_merged = tf.summary.merge(grad_summaries)

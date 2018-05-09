@@ -71,8 +71,8 @@ class AlexNet(object):
         pool5 = max_pool(conv5, 3, 3, 2, 2, padding='VALID', name='pool5')
 
         # 6th Layer: Flatten -> FC (w ReLu) -> Dropout
-        flattened = tf.reshape(pool5, [-1, 6 * 6 * 256])
-        fc6 = fc(flattened, 6 * 6 * 256, 4096, name='fc6')
+        flattened = tf.reshape(pool5, [-1, 6*6*256])
+        fc6 = fc(flattened, 6*6*256, 4096, name='fc6')
         dropout6 = dropout(fc6, self.KEEP_PROB)
 
         # 7th Layer: FC (w ReLu) -> Dropout
@@ -131,7 +131,7 @@ def conv(x, filter_height, filter_width, num_filters, stride_y, stride_x, name,
         # Create tf variables for the weights and biases of the conv layer
         weights = tf.get_variable('weights', shape=[filter_height,
                                                     filter_width,
-                                                    input_channels / groups,
+                                                    input_channels/groups,
                                                     num_filters])
         biases = tf.get_variable('biases', shape=[num_filters])
 
